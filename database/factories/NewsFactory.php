@@ -19,7 +19,7 @@ class NewsFactory extends Factory
         return [
             'judul' => $this->faker->sentence(),
             'ringkasan' => $this->faker->paragraph(),
-            'isi' => $this->faker->text(2000),        
+            'isi' => $this->faker->text(2000),
         ];
     }
 }

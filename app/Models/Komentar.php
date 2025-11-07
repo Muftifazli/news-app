@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Komentar extends Model
 {
     use HasFactory;
+
     protected $table = 'komentar';
 
     protected $fillable = ['nama', 'isi', 'news_id'];

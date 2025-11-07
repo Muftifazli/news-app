@@ -2,34 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Komentar;
 use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    // ini method controller untuk landing page news
+    /**
+     * Display a listing of the news (landing page).
+     */
     public function index()
     {
-        $semua_berita = News::with('wartawan', 'komentar')
-        ->latest()
-        ->get();
+        // show latest news
+        $news = News::with('wartawan')->latest()->paginate(6);
 
-        return view('news.index', [
-            'news_list' => $semua_berita
-        ]);
+        return view('news.index', compact('news'));
     }
 
-    // ini method controller untuk menampilkan detail news
-    // $news akan otomatis diisi oleh Laravel berdasarkan id news yang diakses di route
-    // News $news artinya Laravel akan melakukan route model binding
+    /**
+     * Display the specified news item.
+     */
     public function show(News $news)
     {
-        // load relasi wartawan dan komentar
-        $news->load('wartawan', 'komentar');
+        $news->load(['wartawan', 'komentar']);
 
-        // tampilkan view news.show dengan mengirim data news yang sudah di load relasinya
-        return view('news.show', [
-            'news' => $news
+        // latest comments first
+        $comments = $news->komentar()->latest()->get();
+
+        return view('news.show', compact('news', 'comments'));
+    }
+
+    /**
+     * Store a newly created comment for a news item.
+     */
+    public function storeComment(Request $request, News $news)
+    {
+        $data = $request->validate([
+            'nama' => 'required|string|max:150',
+            'isi' => 'required|string|max:1000',
         ]);
+
+        $comment = new Komentar();
+        $comment->nama = $data['nama'];
+        $comment->isi = $data['isi'];
+        $comment->news_id = $news->id;
+        $comment->save();
+
+        return redirect()->route('news.show', $news)->with('success', 'Komentar berhasil ditambahkan');
     }
 }
+

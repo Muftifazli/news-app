@@ -10,6 +10,7 @@ class Wartawan extends Model
     use HasFactory;
 
     protected $table = 'wartawan';
+
     protected $fillable = ['nama', 'email'];
 
     public function news()

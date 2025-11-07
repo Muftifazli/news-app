@@ -10,6 +10,7 @@ class News extends Model
     use HasFactory;
 
     protected $table = 'news';
+
     protected $fillable = ['judul', 'ringkasan', 'isi', 'wartawan_id'];
 
     public function wartawan()

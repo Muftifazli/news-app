@@ -1,4 +1,5 @@
 # 📰 Aplikasi Berita (News App)
+## Mufti Fazli - 4523210067 news-app
 
 Aplikasi web sederhana untuk mengelola dan menampilkan berita yang dibuat menggunakan Laravel 12. Aplikasi ini dikembangkan untuk tujuan pembelajaran mahasiswa dalam memahami konsep MVC (Model-View-Controller), ORM (Object-Relational Mapping), dan routing di Laravel.
 
